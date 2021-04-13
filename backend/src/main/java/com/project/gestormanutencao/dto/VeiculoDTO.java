@@ -1,6 +1,9 @@
 package com.project.gestormanutencao.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.project.gestormanutencao.entities.Veiculo;
 import com.project.gestormanutencao.enums.Tipo;
 
@@ -18,6 +21,7 @@ public class VeiculoDTO implements Serializable {
     private int fabricacao;
     private int ano;
     private String chassi;
+    private List<ManutencaoDTO> manutencoes = new ArrayList<>();
     private Tipo tipo;
 
     public VeiculoDTO (){
@@ -43,10 +47,6 @@ public class VeiculoDTO implements Serializable {
         ano = veiculo.getAno();
         chassi = veiculo.getChassi();
         tipo = veiculo.getTipo();
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 
     public Long getId() {
@@ -113,4 +113,11 @@ public class VeiculoDTO implements Serializable {
         this.tipo = tipo;
     }
 
+    public List<ManutencaoDTO> getManutencoes() {
+        return manutencoes;
+    }
+
+    public void setManutencoes(List<ManutencaoDTO> manutencoes) {
+        this.manutencoes = manutencoes;
+    }
 }

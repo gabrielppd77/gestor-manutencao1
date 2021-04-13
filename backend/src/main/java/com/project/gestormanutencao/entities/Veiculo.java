@@ -3,6 +3,7 @@ package com.project.gestormanutencao.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.gestormanutencao.dto.VeiculoDTO;
 import com.project.gestormanutencao.enums.Tipo;
 
 @Entity
@@ -50,6 +53,18 @@ public class Veiculo implements Serializable {
         this.ano = ano;
         this.chassi = chassi;
         this.tipo = tipo;
+    }
+
+    public Veiculo (VeiculoDTO dto){
+        this.id = dto.getId();
+        this.placa = dto.getPlaca();
+        this.km = dto.getKm();
+        this.modelo = dto.getModelo();
+        this.fabricacao = dto.getFabricacao();
+        this.ano = dto.getAno();
+        this.chassi = dto.getChassi();
+        this.manutencoes = dto.getManutencoes().stream().map(x -> new Manutencao(x)).collect(Collectors.toList());
+        this.tipo = dto.getTipo();
     }
 
     public Long getId() {
