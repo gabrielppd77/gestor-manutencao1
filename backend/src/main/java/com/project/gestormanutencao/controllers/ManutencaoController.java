@@ -2,13 +2,12 @@ package com.project.gestormanutencao.controllers;
 
 import java.util.List;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-
 import com.project.gestormanutencao.dto.ManutencaoDTO;
 import com.project.gestormanutencao.services.ManutencaoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,5 +51,17 @@ public class ManutencaoController {
     public ResponseEntity<ManutencaoDTO> update(@RequestBody ManutencaoDTO dto, @PathVariable Long id){
         ManutencaoDTO manutencao = service.update(dto, id);
         return ResponseEntity.ok().body(manutencao);
+    }
+
+    @PutMapping(value = "/concluidas/{id}")
+    public ResponseEntity<ManutencaoDTO> concludeManutencao(@PathVariable Long id){
+        ManutencaoDTO manutencao = service.concludeManutencao(id);
+        return ResponseEntity.ok().body(manutencao);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

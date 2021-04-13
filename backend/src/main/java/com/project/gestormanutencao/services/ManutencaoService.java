@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 
 import com.project.gestormanutencao.dto.ManutencaoDTO;
 import com.project.gestormanutencao.entities.Manutencao;
+import com.project.gestormanutencao.enums.Status;
 import com.project.gestormanutencao.repositories.ManutencaoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,7 +37,7 @@ public class ManutencaoService {
 
     public ManutencaoDTO insert(ManutencaoDTO dto){
         Manutencao manutencao = new Manutencao(dto);
-        manutencao.setId(null);
+        //manutencao.setId(null);
         manutencao.setKm_manutencao(0);
         manutencao.setData_criacao(Instant.now());
         return new ManutencaoDTO(repository.save(manutencao));
@@ -56,6 +58,30 @@ public class ManutencaoService {
         Manutencao manu = new Manutencao(manutencao);
 
         return new ManutencaoDTO(repository.save(manu));
+    }
+
+    public ManutencaoDTO concludeManutencao(Long id){
+        ManutencaoDTO manutencao = findById(id);
+        Status status = Status.CONCLUIDA;
+
+        manutencao.setKm_manutencao(manutencao.getVeiculo().getKm());
+        manutencao.setData_finalizacao(Instant.now());
+        manutencao.setStatus(status);
+
+        Manutencao manu = new Manutencao(manutencao);
+
+        return new ManutencaoDTO(repository.save(manu));
+    }
+
+    public void delete(Long id){
+        Optional<Manutencao> manutencao = repository.findById(id);
+        manutencao.get().setVeiculo(null);
+        repository.save(manutencao.get());
+        try {
+            repository.deleteById(id);
+        } catch (Exception e) {
+            throw new DataIntegrityViolationException("Erro " + e.getMessage());
+        }
     }
 
 }
