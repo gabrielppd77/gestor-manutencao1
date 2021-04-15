@@ -37,7 +37,6 @@ public class ManutencaoService {
 
     public ManutencaoDTO insert(ManutencaoDTO dto){
         Manutencao manutencao = new Manutencao(dto);
-        //manutencao.setId(null);
         manutencao.setKm_manutencao(0);
         manutencao.setData_criacao(Instant.now());
         return new ManutencaoDTO(repository.save(manutencao));
@@ -76,8 +75,8 @@ public class ManutencaoService {
     public void delete(Long id){
         Optional<Manutencao> manutencao = repository.findById(id);
         manutencao.get().setVeiculo(null);
-        repository.save(manutencao.get());
         try {
+            repository.save(manutencao.get());
             repository.deleteById(id);
         } catch (Exception e) {
             throw new DataIntegrityViolationException("Erro " + e.getMessage());

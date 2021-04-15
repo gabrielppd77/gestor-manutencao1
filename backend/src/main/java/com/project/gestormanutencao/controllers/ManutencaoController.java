@@ -1,5 +1,6 @@
 package com.project.gestormanutencao.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import com.project.gestormanutencao.dto.ManutencaoDTO;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/manutencoes")
@@ -44,7 +46,8 @@ public class ManutencaoController {
     @PostMapping
     public ResponseEntity<ManutencaoDTO> insert(@RequestBody ManutencaoDTO dto){
         ManutencaoDTO manutencao = service.insert(dto);
-        return ResponseEntity.ok().body(manutencao);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(manutencao);
     }
 
     @PutMapping(value = "/{id}")
