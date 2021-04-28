@@ -20,13 +20,8 @@ public class ManutencaoService {
     @Autowired
     private ManutencaoRepository repository;
 
-    public List<ManutencaoDTO> findAllExceptConcluidas() {
-        List<Manutencao> manutencoes = repository.findAllExceptConcluidas();
-        return manutencoes.stream().map(x -> new ManutencaoDTO(x)).collect(Collectors.toList());
-    }
-
-    public List<ManutencaoDTO> findAllConcluidas() {
-        List<Manutencao> manutencoes = repository.findAllConcluidas();
+    public List<ManutencaoDTO> findAll() {
+        List<Manutencao> manutencoes = repository.findAll();
         return manutencoes.stream().map(x -> new ManutencaoDTO(x)).collect(Collectors.toList());
     }
 
