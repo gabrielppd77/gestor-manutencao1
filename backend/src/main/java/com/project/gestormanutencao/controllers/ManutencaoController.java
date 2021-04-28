@@ -37,32 +37,32 @@ public class ManutencaoController {
         return ResponseEntity.ok().body(manutencoes);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/details/{id}")
     public ResponseEntity<ManutencaoDTO> findById(@PathVariable Long id){
         ManutencaoDTO manutencao = service.findById(id);
         return ResponseEntity.ok().body(manutencao);
     }
 
-    @PostMapping
+    @PostMapping(value = "/insert")
     public ResponseEntity<ManutencaoDTO> insert(@RequestBody ManutencaoDTO dto){
         ManutencaoDTO manutencao = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(manutencao);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/update/{id}")
     public ResponseEntity<ManutencaoDTO> update(@RequestBody ManutencaoDTO dto, @PathVariable Long id){
         ManutencaoDTO manutencao = service.update(dto, id);
         return ResponseEntity.ok().body(manutencao);
     }
 
-    @PutMapping(value = "/concluidas/{id}")
+    @PutMapping(value = "/concluir/{id}")
     public ResponseEntity<ManutencaoDTO> concludeManutencao(@PathVariable Long id){
         ManutencaoDTO manutencao = service.concludeManutencao(id);
         return ResponseEntity.ok().body(manutencao);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.noContent().build();

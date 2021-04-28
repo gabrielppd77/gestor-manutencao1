@@ -32,26 +32,26 @@ public class VeiculoController {
         return ResponseEntity.ok().body(veiculos);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/details/{id}")
     public ResponseEntity<VeiculoDTO> findById(@PathVariable Long id){
         VeiculoDTO veiculo = service.findById(id);
         return ResponseEntity.ok().body(veiculo);
     }
 
-    @PostMapping
+    @PostMapping(value = "/insert")
     public ResponseEntity<VeiculoDTO> insert(@RequestBody VeiculoDTO newDTO){
         VeiculoDTO veiculo = service.insert(newDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").buildAndExpand(veiculo.getId()).toUri();
         return ResponseEntity.created(uri).body(veiculo);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/update/{id}")
     public ResponseEntity<VeiculoDTO> update(@RequestBody VeiculoDTO dto, @PathVariable Long id){
         VeiculoDTO veiculo = service.update(dto, id);
         return ResponseEntity.ok().body(veiculo);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
