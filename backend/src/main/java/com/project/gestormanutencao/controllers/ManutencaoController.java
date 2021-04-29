@@ -26,14 +26,8 @@ public class ManutencaoController {
     private ManutencaoService service;
 
     @GetMapping
-    public ResponseEntity<List<ManutencaoDTO>> findAllExceptConcluidas() {
-        List<ManutencaoDTO> manutencoes = service.findAllExceptConcluidas();
-        return ResponseEntity.ok().body(manutencoes);
-    }
-
-    @GetMapping(value = "/concluidas")
-    public ResponseEntity<List<ManutencaoDTO>> findAllConcluidas() {
-        List<ManutencaoDTO> manutencoes = service.findAllConcluidas();
+    public ResponseEntity<List<ManutencaoDTO>> findAll() {
+        List<ManutencaoDTO> manutencoes = service.findAll();
         return ResponseEntity.ok().body(manutencoes);
     }
 
